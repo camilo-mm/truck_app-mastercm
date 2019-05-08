@@ -1,0 +1,53 @@
+
+
+<!-- registration SECTION -->
+<section class="clearfix loginSection">
+  <div class="container">
+    <div class="row">
+      <div class="center-block col-md-5 col-sm-6 col-xs-12">
+        <div class="panel panel-default loginPanel">
+          <div class="panel-heading text-center">Sign up</div>
+          <div class="panel-body">
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: "loginForm") do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+              <div class="form-group">
+                <label for="userEmail">User Email *</label>
+                <!-- email field -->
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id: "userEmail" %>
+                <p class="help-block">Email</p>
+              </div>
+              <div class="form-group">
+                <label for="userPassword">Password *</label>
+                <!-- password field -->
+                <% if @minimum_password_length %>
+                <em>(<%= @minimum_password_length %> characters minimum)</em>
+                <% end %><br />
+                <%= f.password_field :password, autocomplete: "new-password", class: "form-control", id: "userPassword" %>
+                <p class="help-block">Enter the password that accompanies your username.</p>
+              </div>
+              <div class="form-group">
+                <label for="userPassword">Confirmation Password *</label>
+                <!-- password field -->
+                <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", id: "userPassword" %>
+                <p class="help-block">Enter the password confirmation</p>
+              </div>
+              
+              <div class="form-group">
+                <!-- submit -->
+                <%= f.button "Log in", class: "btn btn-primary pull-left", data: { disable_with: "<i class='fa fa-spinner fa-spin'> </i> Sending..."  } %> 
+              </div>
+            <% end %>
+          </div>
+          <div class="panel-footer text-center">
+            
+              <p>Are you a member? 
+                <%= link_to "log in", new_session_path(resource_name), class: "link" %>
+              </p>
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

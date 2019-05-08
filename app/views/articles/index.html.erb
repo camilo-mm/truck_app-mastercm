@@ -1,0 +1,105 @@
+<!-- PAGE TITLE SECTION -->
+<section class="clearfix pageTitleSection bg-image" style="background-image: url('/assets/background/bg-page-title.jpg');">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="pageTitle">
+          <h2>Blog Page</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG SECTION -->
+<section class="clearfix">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 col-xs-12">
+        <div class="blogInnerWrapper">
+          <div class="thumbnail blogInner ">
+
+              <div class="form-group mgnBtm0">
+                <%  if user_signed_in? && current_user.admin? %>
+               <button class="btn btn-primary"> new <%= link_to 'article', new_article_path  %> </button>
+              <% end %>
+              </div>
+
+            
+
+            <% @articles.each do |article| %>
+              <div class="caption">
+                <h3><%= link_to article.title, article %></h3>
+
+                <p>
+                  <%= truncate(article.content, length: 250) %>
+                </p>
+
+                  <%  if article.content.length > 250  %>
+                  <%= link_to 'Read more', article %>
+                  <%  else  %>
+                  <%= article.content %>
+                  <% end %>
+
+                  <br><br>
+
+                <h4><%= time_ago_in_words(article.created_at)%> ago by <a href=""><%= article.user.username %></a>  </h4>
+                <div>
+                  <%  if user_signed_in? && current_user.admin? %>
+                  <%= link_to 'Edit Article', edit_article_path(article) %>
+                  <% end %>
+                </div>
+                <br><br>
+
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+        <div class="paginationCommon blogPagination">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
+                </a>
+              </li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="col-sm-4 col-xs-12">
+
+        <%= render "categories" %>
+
+        
+        <div class="sidebarInner">
+          <div class="panel panel-default">
+            <div class="panel-heading">Recent Posts</div> 
+            <div class="panel-body">
+              <ul class="list-unstyle categoryList">
+                <li><a href="#">Curabitur scelerisque lacus sit amet.</a></li>
+                <li><a href="#">Morbi pretium ipsum ac massa sollicitu.</a></li>
+                <li><a href="#">Etiam eget augue et lorem sagittis.</a></li>
+                <li><a href="#">Sed mollis tincidunt massa vel egestas.</a></li>
+                <li><a href="#">Aliquam semper dolor nec metus alique.</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
