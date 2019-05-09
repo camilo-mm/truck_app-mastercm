@@ -16,7 +16,7 @@ class ArticlesController < ApplicationController
       @category_id = Category.find_by(name: params[:category]).id
       @articles = Article.where(category_id: @category_id).order(created_at: :desc)
     end
-  end 
+  end
 
   # GET /articles/1
   # GET /articles/1.json
@@ -42,8 +42,21 @@ class ArticlesController < ApplicationController
 
     respond_to do |format|
       if @article.save
+
+        title = @article.title
+        id = @article.id
+        users = User.where(role: "user")
+
+        users.each do |user|
+          email= user.email
+          username = user.username
+          UserNotifierMailer.new_article_to_user(email, title, id, username).deliver_now
+        end
+
+
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
         format.json { render :show, status: :created, location: @article }
+
       else
         format.html { render :new }
         format.json { render json: @article.errors, status: :unprocessable_entity }
