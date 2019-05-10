@@ -4,21 +4,22 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :articles       
+  has_many :articles
+  has_many :trucks       
 
-  enum role: [:user, :shipper, :trucker, :admin]     
-  
+  enum role: [:user, :shipper, :trucker, :admin]
+
   before_create :set_default_user
   after_create :send_welcome_email
 
   def set_default_user
   	self.role = :user
-  end  
+  end
 
 	def avatar_url
 		hash = Digest::MD5.hexdigest(email)
-		"http://www.gravatar.com/avatar/#{hash}?s=25&d=identicon" 	
-    end 
+		"http://www.gravatar.com/avatar/#{hash}?s=25&d=identicon"
+    end
 
   def username
     self.email.split('@')[0]
@@ -28,6 +29,6 @@ class User < ApplicationRecord
     UserNotifierMailer.welcome_user(self).deliver_now
   end
 
-    
+
 
 end
